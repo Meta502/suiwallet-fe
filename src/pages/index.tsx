@@ -24,9 +24,9 @@ export default function Home() {
 
       <div className="flex flex-col items-center justify-center space-y-2">
         <p>
-          Already have an account? <a className="text-blue-500 hover:text-blue-700 transition-all" href="#">Sign In</a>
+          Already have an account? <a className="text-blue-500 hover:text-blue-700 transition-all" href="/auth">Sign In</a>
         </p>
-        <Button variant="solid" colorScheme="blue">
+        <Button variant="solid" colorScheme="blue" href="/auth">
           Join Now
         </Button>
       </div>
