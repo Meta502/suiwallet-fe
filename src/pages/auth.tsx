@@ -111,7 +111,7 @@ function LoginPage() {
          </form></>
         )}
         
-        <Button onClick={toggleIsLogin} colorScheme="teal" variant='link' marginTop={2}>
+        <Button onClick={toggleIsLogin} colorScheme="blue" variant='link' marginTop={2}>
         {isLogin ? 'Need to register?' : 'Already registered?'}
       </Button>
         </Box>
