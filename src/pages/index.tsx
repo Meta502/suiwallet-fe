@@ -26,7 +26,7 @@ export default function Home() {
         <p>
           Already have an account? <Link className="text-blue-500 hover:text-blue-700 transition-all" href="/auth">Sign In</Link>
         </p>
-        <Link href="/auth/sign-up">
+        <Link href="/auth">
           <Button variant="solid" colorScheme="blue">
             Join Now
           </Button>

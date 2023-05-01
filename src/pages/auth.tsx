@@ -21,7 +21,7 @@ function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
       const response = await axios.post("/api/authenticate", {
@@ -36,15 +36,15 @@ function LoginPage() {
     }
   };
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = (event: any) => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: any) => {
     setPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (event) => {
+  const handleConfirmPasswordChange = (event: any) => {
     setConfirmPassword(event.target.value);
   };
 
