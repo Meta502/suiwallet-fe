@@ -1,10 +1,13 @@
 import { Inter } from 'next/font/google'
 import { Button } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useAuth } from '@/contexts/auth'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const { authState: { token }, logout } = useAuth()
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-center p-24 space-y-6 ${inter.className}`}
@@ -23,14 +26,22 @@ export default function Home() {
 
 
       <div className="flex flex-col items-center justify-center space-y-2">
-        <p>
-          Already have an account? <Link className="text-blue-500 hover:text-blue-700 transition-all" href="/auth">Sign In</Link>
-        </p>
-        <Link href="/auth">
-          <Button variant="solid" colorScheme="blue">
-            Join Now
+        {!token ? (
+          <>
+            <p>
+              Already have an account? <Link className="text-blue-500 hover:text-blue-700 transition-all" href="/auth">Sign In</Link>
+            </p>
+            <Link href="/auth">
+              <Button variant="solid" colorScheme="blue">
+                Join Now
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <Button variant="outline" colorScheme="red" onClick={logout}>
+            Logout
           </Button>
-        </Link>
+        )}
       </div>
     </main>
   )

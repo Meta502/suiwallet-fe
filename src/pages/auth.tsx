@@ -9,48 +9,49 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Inter } from "next/font/google";
-import axios from "axios";
+
+import { useAuth } from "@/contexts/auth";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
 function LoginPage() {
+  const router = useRouter()
   const [isLogin, setIsLogin] = useState(true);
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post("/api/authenticate", {
-        email,
-        password,
-      });
-      // Authentication successful, redirect to main page
-      window.location.href = "/main";
-    } catch (error) {
-      // Authentication failed, display error message
-      setError("Hiya, kan belum ada backendnya. Jadi, ini cuma contoh aja.");
-    }
-  };
+  const { authState, login, register: registerUser } = useAuth();
 
-  const handleEmailChange = (event: any) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event: any) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (event: any) => {
-    setConfirmPassword(event.target.value);
-  };
+  React.useEffect(() => {
+    if (authState.token) router.push("/")
+  }, [authState.token])
 
   const toggleIsLogin = () => {
     setIsLogin(!isLogin);
   };
+
+  const onLoginSubmit = (data: any) => {
+    try {
+      login(data.username, data.password)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const onRegisterSubmit = (data: any) => {
+    registerUser(
+      data.username,
+      data.email,
+      data.password,
+      data.confirmPassword,
+    )
+      .then(() => {
+        setIsLogin(true)
+      })
+  }
 
   return (
     <main
@@ -62,21 +63,19 @@ function LoginPage() {
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
               Login
             </Text>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onLoginSubmit)}>
               <Box mb={4}>
                 <Input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  type="text"
+                  placeholder="Username"
+                  {...register("username")}
                 />
               </Box>
               <Box mb={4}>
                 <Input
                   type="password"
                   placeholder="Password"
-                  value={password}
-                  onChange={handlePasswordChange}
+                  {...register("password")}
                 />
               </Box>
               {error && (
@@ -92,29 +91,33 @@ function LoginPage() {
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
               Register
             </Text>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onRegisterSubmit)}>
+              <Box mb={4}>
+                <Input
+                  type="text"
+                  placeholder="Username"
+                  {...register("username")}
+                />
+              </Box>
               <Box mb={4}>
                 <Input
                   type="email"
                   placeholder="Email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  {...register("email")}
                 />
               </Box>
               <Box mb={4}>
                 <Input
                   type="password"
                   placeholder="Password"
-                  value={password}
-                  onChange={handlePasswordChange}
+                  {...register("password")}
                 />
               </Box>
               <Box mb={4}>
                 <Input
-                  type="confirmPassword"
+                  type="password"
                   placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={handleConfirmPasswordChange}
+                  {...register("confirmPassword")}
                 />
               </Box>
               {error && (
