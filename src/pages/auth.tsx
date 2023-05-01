@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Inter } from "next/font/google";
 import axios from "axios";
+import { API_URL }  from "../../constants/api";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ function LoginPage() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/api/authenticate", {
+      const response = await axios.post(API_URL, {
         email,
         password,
       });
@@ -32,7 +33,7 @@ function LoginPage() {
       window.location.href = "/main";
     } catch (error) {
       // Authentication failed, display error message
-      setError("Hiya, kan belum ada backendnya. Jadi, ini cuma contoh aja.");
+      setError("Authentication failed");
     }
   };
 
@@ -111,7 +112,7 @@ function LoginPage() {
               </Box>
               <Box mb={4}>
                 <Input
-                  type="confirmPassword"
+                  type="password"
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
