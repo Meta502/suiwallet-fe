@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { Button } from '@chakra-ui/react'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,11 +24,13 @@ export default function Home() {
 
       <div className="flex flex-col items-center justify-center space-y-2">
         <p>
-          Already have an account? <a className="text-blue-500 hover:text-blue-700 transition-all" href="/auth">Sign In</a>
+          Already have an account? <Link className="text-blue-500 hover:text-blue-700 transition-all" href="/auth">Sign In</Link>
         </p>
-        <Button variant="solid" colorScheme="blue" href="/auth">
-          Join Now
-        </Button>
+        <Link href="/auth/sign-up">
+          <Button variant="solid" colorScheme="blue">
+            Join Now
+          </Button>
+        </Link>
       </div>
     </main>
   )
