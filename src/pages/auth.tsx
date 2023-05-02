@@ -8,6 +8,7 @@ import {
   Text,
   Box,
 } from "@chakra-ui/react";
+
 import { Inter } from "next/font/google";
 
 import { useAuth } from "@/contexts/auth";
