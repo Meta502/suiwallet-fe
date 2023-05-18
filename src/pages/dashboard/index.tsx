@@ -41,11 +41,21 @@ export default function Home() {
             isClosable: true,
           })
         }
+
+        const copyAccount = () => {
+            toast({
+                title: 'Account Number Copied',
+                status: 'success',
+                duration: 9000,
+                position: 'top',
+                isClosable: true,
+              })
+            }
   
     return (
       <main className={`flex min-h-screen flex-col p-8 md:p-24 space-y-6 ${inter.className}`}>
         <div className='flex flex-row justify-between'>
-            <h1 className='text-3xl font-bold'>Your dashboard</h1>
+            <h1 className='text-3xl font-bold text-sky-600'>Your dashboard</h1>
             <Button colorScheme='red' variant='ghost' onClick={logout}>
                 Log Out
             </Button>
@@ -53,7 +63,13 @@ export default function Home() {
         <div className='flex flex-col p-8 gap-y-2 w-full border rounded-md'>
             <h2 className='text-xl'>Balance</h2>
             <h1 className='text-3xl font-bold'>$ 69.0</h1>
-            <p>Your account number: 6969696</p>
+            <div className='flex flex-row gap-x-2 items-center stroke-gray-500 hover:stroke-sky-500 cursor-pointer' onClick={copyAccount}>
+                <p>Your account number: 6969696</p>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                </svg>
+            </div>
+            
         </div>
         <div className='flex flex-col md:flex-row gap-y-4 gap-x-4 w-full text-center text-sm md:text-base'>
             <div className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
@@ -99,7 +115,6 @@ export default function Home() {
                         <Thead>
                             <Tr>
                                 <Th>Transfer Details</Th>
-                                <Th></Th>
                             </Tr>
                         </Thead>
                         <Tbody>
@@ -116,11 +131,6 @@ export default function Home() {
                                         <p className='text-sm'>28 March 2023 08:34</p>  
                                     </div>
                                 </Td>
-                                <Td>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                    </svg>
-                                </Td>
                             </Tr>
                             <Tr>
                                 <Td>
@@ -135,11 +145,6 @@ export default function Home() {
                                         <p className='text-sm'>28 March 2023 08:34</p>  
                                     </div>
                                 </Td>
-                                <Td>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                    </svg>
-                                </Td>
                             </Tr>
                             <Tr>
                                 <Td>
@@ -153,11 +158,6 @@ export default function Home() {
                                         <h3 className='text-2xl font-bold'>$69</h3>
                                         <p className='text-sm'>28 March 2023 08:34</p>  
                                     </div>
-                                </Td>
-                                <Td>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                    </svg>
                                 </Td>
                             </Tr>
                         </Tbody>
@@ -190,7 +190,7 @@ export default function Home() {
                                 </Td>
                                 <Td className='font-bold text-lg'>$69</Td>
                                 <Td>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-sky-700 w-6 h-6 hover:stroke-2 cursor-pointer">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                                     </svg>
                                 </Td>
