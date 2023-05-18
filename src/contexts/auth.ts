@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
+import { useState } from "react"
 import toast from "react-hot-toast"
 
 export const authAtom = atomWithStorage("auth", {
