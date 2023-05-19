@@ -42,15 +42,15 @@ export default function Home() {
           })
         }
 
-        const copyAccount = () => {
-            toast({
-                title: 'Account Number Copied',
-                status: 'success',
-                duration: 9000,
-                position: 'top',
-                isClosable: true,
-              })
-            }
+    const copyAccount = () => {
+        toast({
+            title: 'Account Number Copied',
+            status: 'success',
+            duration: 9000,
+            position: 'top',
+            isClosable: true,
+            })
+        }
   
     return (
       <main className={`flex min-h-screen flex-col p-8 md:p-24 space-y-6 ${inter.className}`}>
@@ -100,7 +100,7 @@ export default function Home() {
                 <p>Payment History</p>
             </div>
 
-            <div className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
+            <div className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer" onClick={() => {router.push("/dashboard/va")}}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
                 </svg>
