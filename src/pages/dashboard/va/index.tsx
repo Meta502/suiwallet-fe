@@ -40,8 +40,9 @@ export default function Home() {
         </Button>
       </div>
 
-      <div>
+      <div className='flex flex-col gap-y-6'>
         <VAListCard key={"9q4395-dfgbhg54-9784289f"} VAId={"9q4395-dfgbhg54-9784289f"} name={"Suisei Supacha"} balance={69} dateCreated={"18 May 2023 08:45 WIB"} />
+        <VAListCard key={"9q4395-dfgbhg54-54564545"} VAId={"9q4395-dfgbhg54-54564545"} name={"MEMBERSHIP GAWR GURA"} balance={928942} dateCreated={"18 May 2023 08:45 WIB"} />
       </div>
 
     </main>
