@@ -4,23 +4,25 @@ import {
     Tr,
     Td,
     useToast,
+    Badge
   } from '@chakra-ui/react'
 
 export interface VAListTable {
     key:string
     VAId:string
     name:string
-    balance:number
+    amount:number
+    paid:boolean
 }
 
-export const VAListTable: React.FC<VAListTable> = ({ VAId, name, balance }) => {
+export const VAListTable: React.FC<VAListTable> = ({ VAId, name, amount, paid }) => {
 
     const toast = useToast()
 
     return (
     <Tr key={ VAId }>
         <Td>
-            <div className='flex flex-col gap-y-1'>
+            <div className='flex flex-col gap-y-2'>
                 <h2 className='font-bold text-base'>VA for { name }</h2>
                 <div className='flex flex-row gap-x-2 items-center stroke-gray-500 hover:stroke-sky-500 cursor-pointer' onClick={() => copyID(VAId, toast)}>
                     <p className='text-sm'>{ VAId }</p>
@@ -30,11 +32,24 @@ export const VAListTable: React.FC<VAListTable> = ({ VAId, name, balance }) => {
                 </div>
             </div>
         </Td>
-        <Td className='font-bold text-lg'>${ balance }</Td>
-        <Td>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-sky-700 w-6 h-6 hover:stroke-2 cursor-pointer">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
+        <Td className='font-bold text-lg'>
+            <div className='flex flex-col gap-y-2'>
+                <p>${ amount }</p>
+                <div className="w-fit">
+                    {
+                        paid ? (
+                            <Badge variant='outline' colorScheme='green'>
+                                Paid
+                            </Badge>
+                        ) : (
+                            <Badge variant='outline' colorScheme='red'>
+                                Unpaid
+                            </Badge>
+                        )
+                    }
+                </div>
+                
+            </div>
         </Td>
     </Tr>
 

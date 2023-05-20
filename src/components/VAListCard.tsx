@@ -1,6 +1,6 @@
 import React from "react"
 import { copyID } from "@/utils" 
-import { useToast } from '@chakra-ui/react'
+import { useToast, Badge } from '@chakra-ui/react'
 
 export interface VAListCard {
     key:string
@@ -8,14 +8,15 @@ export interface VAListCard {
     name:string
     balance:number
     dateCreated:string
+    paid:boolean
 }
 
-export const VAListCard: React.FC<VAListCard> = ({ VAId, name, balance, dateCreated }) => {
+export const VAListCard: React.FC<VAListCard> = ({ VAId, name, balance, dateCreated, paid }) => {
 
     const toast = useToast()
 
     return (
-    <div className='flex flex-col md:flex-row p-6 border rounded-md gap-y-4 hover:bg-sky-50 hover:border-sky-600 hover:border-2 cursor-pointer'>
+    <div className='flex flex-col md:flex-row p-6 border rounded-md gap-y-4'>
 
         <div className='flex flex-col gap-y-2 md:basis-8/12'>
           <div className='flex flex-row gap-x-2 items-center stroke-gray-500 hover:stroke-sky-500 cursor-pointer' onClick={() => copyID(VAId, toast)}>
@@ -24,20 +25,50 @@ export const VAListCard: React.FC<VAListCard> = ({ VAId, name, balance, dateCrea
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
               </svg>
           </div>
-          <h1 className='text-xl font-bold'>VA for { name }</h1>
+          <h1 className='text-2xl font-bold'>VA for { name }</h1>
           <p className='text-sm'>Created at { dateCreated }</p>
         </div>
 
         <div className='flex flex-col gap-y-2 md:basis-3/12'>
           <p className='text-sm'>Balance:</p>
-          <h1 className='text-3xl font-bold'>${ balance }</h1>
+          <h1 className='text-2xl font-bold'>${ balance }</h1>
+          <div className="w-fit">
+                {
+                    paid ? (
+                        <Badge variant='outline' colorScheme='green'>
+                            Paid
+                        </Badge>
+                    ) : (
+                        <Badge variant='outline' colorScheme='red'>
+                            Unpaid
+                        </Badge>
+                    )
+                }
+            </div>
         </div>
 
-        <div className='flex flex invisible h-0 md:visible md:basis-1/12 md:h-full md:min-h-full place-content-end'>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-sky-800 w-8 h-8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-          </svg>
-        </div>
+        {
+            paid ? (
+                <div className='flex flex-row md:flex-col md:basis-1/12 h-full place-content-end gap-x-4 md:gap-y-4 items-center self-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-sky-800 w-7 h-7 hover:stroke-2 cursor-pointer">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-gray-300 w-7 h-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                </div>
+            ) : (
+                <div className='flex flex-row md:flex-col md:basis-1/12 h-full place-content-end gap-x-4 md:gap-y-4 items-center self-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-gray-300 w-7 h-7">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke stroke-1 stroke-red-500 w-7 h-7 hover:stroke-2 cursor-pointer">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                </div>
+            )
+        }
+        
 
       </div>
 
