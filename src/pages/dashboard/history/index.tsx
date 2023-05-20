@@ -61,6 +61,7 @@ export default function Home() {
                         <TransactionTableComponent key={"293429-42945-324234"} tfId={"293429-42945-324234"} type={"VA Payment"} receiver={"Adrian Ardrizza"} amount={69} date={"28 March 2023 08:34"} />
                         <TransactionTableComponent key={"293429-42945-435435"} tfId={"293429-42945-435435"} type={"Top Up"} receiver={"your account"} amount={128} date={"28 March 2023 08:34"} />
                         <TransactionTableComponent key={"293429-42945-164534"} tfId={"293429-42945-164534"} type={"Transfer"} receiver={"Ahkid"} amount={24} date={"28 March 2023 08:34"} />
+                        <TransactionTableComponent key={"293429-42945-435435"} tfId={"293429-42945-435435"} type={"VA Withdrawal"} receiver={"your account"} amount={128} date={"28 March 2023 08:34"} />
             
                     </Tbody>
                 </Table>
