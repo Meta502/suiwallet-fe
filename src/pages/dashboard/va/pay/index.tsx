@@ -16,7 +16,6 @@ import axios from 'axios';
 
 const inter = Inter({ subsets: ['latin'] })
 
-//render VA creation form
 
 export default function Home() {
     const { authState: { token }, logout } = useAuth()
@@ -67,15 +66,15 @@ export default function Home() {
                     </svg>
                     <p>Go Back</p>
                 </Button>
-                    <h1 className='text-3xl font-bold text-sky-600'>Create New Virtual Account</h1>
+                    <h1 className='text-3xl font-bold text-sky-600'>Pay With Virtual Account</h1>
                 </div>
             </div>
             <Box mx="auto" mt={8} borderWidth="1px" borderRadius="lg" p={8}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col justify-center space-y-2 py-2">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="va-number">VA Number</label>
                         <Box mb={4}>
-                            <Input type="text" id="name" {...register("name", { required: true })} />
+                            <Input type="text" id="va-number" {...register("target-account-number", { required: true })} />
                         </Box>
                         {errors.name && <Text color="red.500">This field is required</Text>}
                     </div>
@@ -85,13 +84,6 @@ export default function Home() {
                             <Input type="number" id="amount" {...register("amount", { required: true })} />
                         </Box>
                         {errors.amount && <Text color="red.500">This field is required</Text>}
-                    </div>
-                    <div className="flex flex-col justify-center space-y-2 py-2">
-                        <label htmlFor="price">Price</label>
-                        <Box mb={4}>
-                            <Input type="number" id="price" {...register("price", { required: true })} />
-                        </Box>
-                        {errors.price && <Text color="red.500">This field is required</Text>}
                     </div>
                     <div className="flex flex-col justify-center space-y-2 py-2">
                         <label htmlFor="notes">Notes</label>
