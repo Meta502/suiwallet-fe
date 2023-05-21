@@ -49,7 +49,7 @@ export const useAuth = () => {
         token: null,
       })
     },
-    register: async (username: string, email: string, password: string, confirmPassword: string, nik:string, birth_date:Date, phone_number:number, address:string, postal_code:number) => {
+    register: async (username: string, email: string, password: string, confirmPassword: string, nik:string, birth_date:Date, phone_number:string, address:string, postal_code:string) => {
       if (password !== confirmPassword) {
         return toast.error("Passwords do not match. Please re-chack your password!", {
           position: "bottom-right",
