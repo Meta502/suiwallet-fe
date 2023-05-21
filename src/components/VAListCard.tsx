@@ -30,7 +30,7 @@ export const VAListCard: React.FC<VAListCard> = ({ VAId, name, balance, dateCrea
 
         <div className='flex flex-col gap-y-2 md:basis-3/12'>
           <p className='text-sm'>Balance:</p>
-          <h1 className='text-5xl font-bold'>${ balance }</h1>
+          <h1 className='text-3xl font-bold'>${ balance }</h1>
         </div>
 
         <div className='flex flex invisible h-0 md:visible md:basis-1/12 md:h-full md:min-h-full place-content-end'>

@@ -23,11 +23,6 @@ export default function Home() {
     }
   }, [router, token])
 
-  const handleCreateVA = (e:any) => {
-    e.preventDefault();
-    router.push("/dashboard/va/create");
-  };
-
   return (
     <main className={`flex min-h-screen flex-col p-8 md:p-24 space-y-6 ${inter.className}`}>
       <div className='flex flex-col gap-y-8 md:flex-row md:justify-between'>
@@ -40,13 +35,14 @@ export default function Home() {
           </Button>
             <h1 className='text-3xl font-bold text-sky-600'>Manage your Virtual Account</h1>
         </div>
-        <Button colorScheme='blue' variant='solid' className='gap-x-2 items-center' onClick={handleCreateVA}>
+        <Button colorScheme='blue' variant='solid' className='gap-x-2 items-center'>
           <p>Create New VA</p>
         </Button>
       </div>
 
-      <div>
+      <div className='flex flex-col gap-y-6'>
         <VAListCard key={"9q4395-dfgbhg54-9784289f"} VAId={"9q4395-dfgbhg54-9784289f"} name={"Suisei Supacha"} balance={69} dateCreated={"18 May 2023 08:45 WIB"} />
+        <VAListCard key={"9q4395-dfgbhg54-54564545"} VAId={"9q4395-dfgbhg54-54564545"} name={"MEMBERSHIP GAWR GURA"} balance={928942} dateCreated={"18 May 2023 08:45 WIB"} />
       </div>
 
     </main>
