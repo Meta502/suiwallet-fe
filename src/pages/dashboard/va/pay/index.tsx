@@ -29,32 +29,22 @@ export default function Home() {
         }
     }, [router, token])
 
-    const onSubmit = (data: any) => {
-        //submit form to backend in process.env.NEXT_PUBLIC_BASE_API_URL
+    const handlePayment = (data:any) => {
+        //submit a PUT request to backend in process.env.NEXT_PUBLIC_BASE_API_URL/transaction/virtual-account/{vaId}
+        //render the payment confirmation page with the response
+        //confirm payment
         //use toast to display success message
-        axios.post(process.env.NEXT_PUBLIC_BASE_API_URL+ "/transaction/virtual-account/", {
-            name: data.name,
-            amount: data.amount,
-            price: data.price,
-            notes: data.notes
-        }).then((res) => {
+        axios.put(process.env.NEXT_PUBLIC_BASE_API_URL+ "/transaction/virtual-account/" + data.vaId, {
+        }
+        ).then((res) => {
             console.log(res);
-            toast({
-                title: "VA Created.",
-                description: "Your VA has been created.",
-                status: "success",
-                duration: 9000,
-                isClosable: true,
-            })
-        }, (error) => {
+        }
+        ).catch((error) => {
             console.log(error);
-            toast({
-                title: "VA Creation Failed.",
-                description: "Your VA has not been created.",
-                status: "error",
-            })
-        })
-    };
+        }
+        )
+    }
+
     
     return (
         <main className={`flex min-h-screen flex-col p-8 md:p-24 space-y-6 ${inter.className}`}>
@@ -70,29 +60,15 @@ export default function Home() {
                 </div>
             </div>
             <Box mx="auto" mt={8} borderWidth="1px" borderRadius="lg" p={8}>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(handlePayment)}>
                     <div className="flex flex-col justify-center space-y-2 py-2">
                         <label htmlFor="va-number">VA Number</label>
                         <Box mb={4}>
-                            <Input type="text" id="va-number" {...register("target-account-number", { required: true })} />
+                            <Input type="text" id="va-number" {...register("vaId", { required: true })} />
                         </Box>
                         {errors.name && <Text color="red.500">This field is required</Text>}
                     </div>
-                    <div className="flex flex-col justify-center space-y-2 py-2">
-                        <label htmlFor="amount">Amount</label>
-                        <Box mb={4}>
-                            <Input type="number" id="amount" {...register("amount", { required: true })} />
-                        </Box>
-                        {errors.amount && <Text color="red.500">This field is required</Text>}
-                    </div>
-                    <div className="flex flex-col justify-center space-y-2 py-2">
-                        <label htmlFor="notes">Notes</label>
-                        <Box mb={4}>
-                            <Input type="text" id="notes" {...register("notes", { required: true })} />
-                        </Box>
-                        {errors.notes && <Text color="red.500">This field is required</Text>}
-                    </div>
-                    <Button type="submit" marginTop={4} colorScheme="blue">Create</Button>
+                    <Button type="submit" marginTop={4} colorScheme="blue">Pay</Button>
                 </form>
                 </Box>
         </main>
