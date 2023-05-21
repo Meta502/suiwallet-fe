@@ -10,6 +10,7 @@ export const authAtom = atomWithStorage("auth", {
 
 export const useAuth = () => {
   const [authState, setAuthState] = useAtom(authAtom)
+  const NusantaraValid = require('nusantara-valid')
 
   return {
     authState,
@@ -48,17 +49,35 @@ export const useAuth = () => {
         token: null,
       })
     },
-    register: async (username: string, email: string, password: string, confirmPassword: string) => {
+    register: async (username: string, email: string, password: string, confirmPassword: string, nik:string, birth_date:Date, phone_number:number, address:string, postal_code:number) => {
       if (password !== confirmPassword) {
         return toast.error("Passwords do not match. Please re-chack your password!", {
           position: "bottom-right",
         })
+      } else if (!NusantaraValid.isValidNIK(nik)) {
+        return toast.error("Invalid NIK number", {
+          position: "bottom-right",
+        })
+      } else if (!NusantaraValid.isValidCellularNumber(String(phone_number))) {
+        return toast.error("Invalid phone number", {
+          position: "bottom-right",
+        })
+      } else if (!NusantaraValid.isValidZIP(String(postal_code))) {
+        return toast.error("Invalid postal code", {
+          position: "bottom-right",
+        })
       }
+    
 
       const request = axios.post(`${process.env.NEXT_PUBLIC_BASE_API_URL}/cores/auth/register/`, {
         username,
         email,
         password,
+        nik,
+        birth_date,
+        phone_number,
+        address,
+        postal_code,
       })
 
       toast.promise(

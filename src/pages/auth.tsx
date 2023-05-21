@@ -48,6 +48,11 @@ function LoginPage() {
       data.email,
       data.password,
       data.confirmPassword,
+      data.nik,
+      data.birth_date,
+      data.phone_number,
+      data.address,
+      data.postal_code,
     )
       .then(() => {
         setIsLogin(true)
@@ -119,6 +124,41 @@ function LoginPage() {
                   type="password"
                   placeholder="Confirm Password"
                   {...register("confirmPassword")}
+                />
+              </Box>
+              <Box mb={4}>
+                <Input
+                  type="number"
+                  placeholder="NIK"
+                  {...register("nik")}
+                />
+              </Box>
+              <Box mb={4}>
+                <Input
+                  type="date"
+                  placeholder="Birth Date"
+                  {...register("birth_date")}
+                />
+              </Box>
+              <Box mb={4}>
+                <Input
+                  type="number"
+                  placeholder="Phone Number"
+                  {...register("phone_number")}
+                />
+              </Box>
+              <Box mb={4}>
+                <Input
+                  type="text"
+                  placeholder="Address"
+                  {...register("address")}
+                />
+              </Box>
+              <Box mb={4}>
+                <Input
+                  type="number"
+                  placeholder="Postal Code"
+                  {...register("postal_code")}
                 />
               </Box>
               {error && (
