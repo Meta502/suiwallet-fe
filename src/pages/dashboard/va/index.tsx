@@ -1,23 +1,27 @@
 import { Inter } from 'next/font/google'
-import { Button } from '@chakra-ui/react'
-import Link from 'next/link'
 import { useAuth } from '@/contexts/auth'
 import { useRouter } from "next/router";
+import { VAListCard } from "../../../components/VAListCard";
 import React from 'react';
+import Link from 'next/link'
+
+import { 
+  Button,
+  useToast,
+} from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const { authState: { token }, logout } = useAuth()
   const router = useRouter()
-
+  const toast = useToast()
 
   React.useEffect(() => {
     if (!token) {
       router.push("/auth")
     }
   }, [router, token])
-
 
   return (
     <main className={`flex min-h-screen flex-col p-8 md:p-24 space-y-6 ${inter.className}`}>
@@ -40,6 +44,8 @@ export default function Home() {
         <VAListCard key={"9q4395-dfgbhg54-9784289f"} VAId={"9q4395-dfgbhg54-9784289f"} name={"Suisei Supacha"} balance={69} dateCreated={"18 May 2023 08:45 WIB"} />
         <VAListCard key={"9q4395-dfgbhg54-54564545"} VAId={"9q4395-dfgbhg54-54564545"} name={"MEMBERSHIP GAWR GURA"} balance={928942} dateCreated={"18 May 2023 08:45 WIB"} />
       </div>
+
+
     </main>
   )
 }
