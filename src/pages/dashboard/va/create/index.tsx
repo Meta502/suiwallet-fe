@@ -3,13 +3,16 @@ import { useRouter } from "next/router";
 import Link from 'next/link';
 import { useAuth } from '@/contexts/auth';
 import { useForm } from 'react-hook-form';
+import { useBoolean } from '@chakra-ui/hooks';
 import React from 'react';
 import {
     Text,
     Input,
     Button,
     Box,
-    useToast
+    useToast,
+    Switch,
+    FormControl,
   } from '@chakra-ui/react'
 import axios from 'axios';
 
@@ -23,6 +26,7 @@ export default function Home() {
     const router = useRouter()
     const toast = useToast()
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const [recurring, setRecurrinng] = useBoolean()
 
     React.useEffect(() => {
         if (!token) {
@@ -30,14 +34,16 @@ export default function Home() {
         }
     }, [router, token])
 
+
     const onSubmit = (data: any) => {
         //submit form to backend in process.env.NEXT_PUBLIC_BASE_API_URL
         //use toast to display success message
         axios.post(process.env.NEXT_PUBLIC_BASE_API_URL+ "/transaction/virtual-account/", {
-            name: data.name,
-            amount: data.amount,
+            title: data.title,
+            transaction_amount: data.transaction_amount,
             price: data.price,
-            notes: data.notes
+            description: data.description,
+            recurring: data.recurring
         }).then((res) => {
             console.log(res);
             toast({
@@ -62,19 +68,19 @@ export default function Home() {
             <Box maxW="md" mx="auto" mt={8} borderWidth="1px" borderRadius="lg" p={8}>
             <Text fontSize="2xl" fontWeight="bold" mb={4}>Create New Virtual Account</Text>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col justify-center space-y-2">
-                        <label htmlFor="name">Name</label>
+                    <div className="flex flex-col justify-center space-y-2 py-2">
+                        <label htmlFor="title">Title</label>
                         <Box mb={4}>
-                            <Input type="text" id="name" {...register("name", { required: true })} />
+                            <Input type="text" id="title" {...register("title", { required: true })} />
                         </Box>
-                        {errors.name && <Text color="red.500">This field is required</Text>}
+                        {errors.title && <Text color="red.500">This field is required</Text>}
                     </div>
-                    <div className="flex flex-col justify-center space-y-2">
-                        <label htmlFor="amount">Amount</label>
+                    <div className="flex flex-col justify-center space-y-2 py-2">
+                        <label htmlFor="transaction-amount">Transaction Amount</label>
                         <Box mb={4}>
-                            <Input type="number" id="amount" {...register("amount", { required: true })} />
+                            <Input type="number" id="transaction-amount" {...register("transaction_amount", { required: true })} />
                         </Box>
-                        {errors.amount && <Text color="red.500">This field is required</Text>}
+                        {errors.transaction_amount && <Text color="red.500">This field is required</Text>}
                     </div>
                     <div className="flex flex-col justify-center space-y-2">
                         <label htmlFor="price">Price</label>
@@ -83,13 +89,17 @@ export default function Home() {
                         </Box>
                         {errors.price && <Text color="red.500">This field is required</Text>}
                     </div>
-                    <div className="flex flex-col justify-center space-y-2">
-                        <label htmlFor="notes">Notes</label>
+                    <div className="flex flex-col justify-center space-y-2 py-2">
+                        <label htmlFor="description">Description</label>
                         <Box mb={4}>
-                            <Input type="text" id="notes" {...register("notes", { required: true })} />
+                            <Input type="text" id="description" {...register("description", { required: true })} />
                         </Box>
-                        {errors.notes && <Text color="red.500">This field is required</Text>}
+                        {errors.description && <Text color="red.500">This field is required</Text>}
                     </div>
+                    <FormControl display='flex' alignItems='center' my={2} className='space-x-4'>
+                            <label htmlFor="recurring" className='font-bold'>Recurring</label>
+                            <Switch id="recurring" {...register("recurring")} />
+                    </FormControl>
                     <Button type="submit" marginTop={4} colorScheme="blue">Create</Button>
                 </form>
                 </Box>
