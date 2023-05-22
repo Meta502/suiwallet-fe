@@ -30,17 +30,23 @@ export default function Home() {
   const router = useRouter()
   const toast = useToast()
 
-  const { data: transactionData }: any = useSWR(`${process.env.NEXT_PUBLIC_BASE_API_URL}/transaction/inquiry/`, (url: string) => token && fetch(url, {
+  const { data: transactionData }: any = useSWR(token ? `${process.env.NEXT_PUBLIC_BASE_API_URL}/transaction/inquiry/` : null, (url: string) => fetch(url, {
     headers: {
       "Authorization": `Token ${token}`
     }
-  }).then(res => res.json()))
+  }).then(res => res.json()), { refreshInterval: 1000 })
 
-  const { data: accountData }: any = useSWR(`${process.env.NEXT_PUBLIC_BASE_API_URL}/cores/account/`, (url: string) => token && fetch(url, {
+  const { data: accountData }: any = useSWR(token ? `${process.env.NEXT_PUBLIC_BASE_API_URL}/cores/account/` : null, (url: string) => fetch(url, {
     headers: {
       "Authorization": `Token ${token}`
     }
-  }).then(res => res.json()))
+  }).then(res => res.json()), { refreshInterval: 1000 })
+
+  const { data: virtualAccountData }: any = useSWR(token ? `${process.env.NEXT_PUBLIC_BASE_API_URL}/transaction/virtual-account/` : null, (url: string) => fetch(url, {
+    headers: {
+      "Authorization": `Token ${token}`
+    }
+  }).then(res => res.json()), { refreshInterval: 1000 })
 
   React.useEffect(() => {
     if (!token) {
@@ -68,19 +74,19 @@ export default function Home() {
 
       </div>
       <div className='flex flex-col md:flex-row gap-y-4 gap-x-4 w-full text-center text-sm md:text-base'>
-        <div className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
+        <Link href="/dashboard/top-up" className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
           </svg>
           <p>Top-up Wallet</p>
-        </div>
+        </Link>
 
-        <div className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
+        <Link className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer" href="/dashboard/va/pay">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
           </svg>
           <p>Pay with VA</p>
-        </div>
+        </Link>
 
         <div className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
@@ -132,10 +138,16 @@ export default function Home() {
                 </Tr>
               </Thead>
               <Tbody>
-
-                <VAListTable key={"9q4395-dfgbhg54-9784289f"} VAId={"9q4395-dfgbhg54-9784289f"} name={"Suisei Supacha"} amount={69} paid={true} />
-                <VAListTable key={"9q4395-dfgbhg54-34535546"} VAId={"9q4395-dfgbhg54-34535546"} name={"MEMBERSHIP GAWR GURA"} amount={97456} paid={false} />
-
+                {virtualAccountData?.map((item: any) => (
+                  <VAListTable
+                    key={item.id}
+                    VAId={item.id}
+                    VAPaymentCode={item.paymentCode}
+                    name={item.title}
+                    amount={item.amount}
+                    paid={item.status === "PAID"}
+                  />
+                ))}
               </Tbody>
             </Table>
           </TableContainer>

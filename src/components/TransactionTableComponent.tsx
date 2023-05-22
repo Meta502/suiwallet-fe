@@ -49,6 +49,7 @@ export const TransactionTableComponent: React.FC<TransactionTableComponent> = ({
           <p className='text-sm'>to {type === "TOPUP" || type === "VIRTUAL_ACCOUNT_WITHDRAWAL" || receiving ? "your account" : receiver}</p>
         </div>
         <h3 className='text-2xl font-bold'>{new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(amount)}</h3>
+        {type === "TOPUP" && status !== "FINISHED" && <p className="text-sm">Payment Code: {tfId}</p>}
         <p className='text-sm'>{date}</p>
       </div>
     </Td>
