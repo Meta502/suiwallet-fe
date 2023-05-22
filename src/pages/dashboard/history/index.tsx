@@ -64,7 +64,7 @@ export default function Home() {
               </Tr>
             </Thead>
             <Tbody>
-              {transactionData?.map((item: any) => (
+              {transactionData?.map?.((item: any) => (
                 <TransactionTableComponent receiving={item.metadata?.receiving} key={item.id} tfId={item.id} type={item.type} receiver={item.metadata?.targetId} amount={item?.metadata?.amount} date={new Date(item.createdAt).toLocaleString()} status={item.status} />
               ))}
             </Tbody>

@@ -1,11 +1,12 @@
 import { Inter } from 'next/font/google'
 import { useRouter } from "next/router"
 import Link from 'next/link'
-import { copyAccount } from '@/utils'
+import { copyAccount, hideText } from '@/utils'
 import { useAuth } from '@/contexts/auth'
 import { TransactionTableComponent } from "../../components/TransactionTableComponent"
 import { VAListTable } from "../../components/VAListTable";
 import React from 'react';
+import { useState } from "react";
 import {
   Table,
   Thead,
@@ -29,6 +30,7 @@ export default function Home() {
   const { authState: { token }, logout } = useAuth()
   const router = useRouter()
   const toast = useToast()
+  const [hidden, setHidden] = React.useState(false)
 
   const { data: transactionData }: any = useSWR(token ? `${process.env.NEXT_PUBLIC_BASE_API_URL}/transaction/inquiry/` : null, (url: string) => fetch(url, {
     headers: {
@@ -62,17 +64,45 @@ export default function Home() {
           Log Out
         </Button>
       </div>
-      <div className='flex flex-col p-8 gap-y-2 w-full border rounded-md'>
-        <h2 className='text-xl'>Balance</h2>
-        <h1 className='text-3xl font-bold'>{new Intl.NumberFormat("id-ID", { currency: "IDR", style: "currency" }).format(accountData?.balance)}</h1>
-        <div className='flex flex-row gap-x-2 items-center stroke-gray-500 hover:stroke-sky-500 cursor-pointer' onClick={() => copyAccount(accountData?.id, toast)}>
-          <p>Your account ID: {accountData?.id}</p>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
-          </svg>
-        </div>
 
+      <div className='flex flex-col gap-y-4 md:flex-row gap-x-4'>
+        <div className='flex flex-col p-8 gap-y-2 w-full border rounded-md md:basis-3/5 self-center md:h-full'>
+          <h2 className='text-xl'>Balance</h2>
+          <h1 className='text-3xl font-bold'>{new Intl.NumberFormat("id-ID", { currency: "IDR", style: "currency" }).format(accountData?.balance)}</h1>
+          <div className='flex flex-row gap-x-2 items-center stroke-gray-500 hover:stroke-sky-500 cursor-pointer' onClick={() => copyAccount(accountData?.id, toast)}>
+            <p>Your account ID: {accountData?.id}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+            </svg>
+          </div>
+        </div>
+        <div className='flex flex-col p-8 gap-y-1 w-full border rounded-md md:basis-2/5 self-center'>
+        <div className='flex flex-row gap-x-1'>
+            <h3 className='font-bold'>Username:</h3>
+            <p>ardirzza</p>
+          </div>
+          <div className='flex flex-row gap-x-1'>
+            <h3 className='font-bold'>Email:</h3>
+            <p>mail@mail.com</p>
+          </div>
+          <div className='flex flex-row gap-x-1'>
+            <h3 className='font-bold'>Birth Date:</h3>
+            <p>17/08/2023</p>
+          </div>
+          <div className='flex flex-row gap-x-1'>
+            <h3 className='font-bold'>NIK:</h3>
+            <div className='flex flex-row gap-x-1 items-center' onClick={() => setHidden(!hidden)}>
+              <p>{ hideText("28937439287498", !hidden) }</p>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='w-4 h-4'>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+          </div>
+        </div>
       </div>
+      
+
       <div className='flex flex-col md:flex-row gap-y-4 gap-x-4 w-full text-center text-sm md:text-base'>
         <Link href="/dashboard/top-up" className="flex flex-col md:basis-1/5 p-4 md:p-6 gap-y-4 border rounded-md items-center hover:bg-sky-50 hover:border-sky-600 hover:border-2 hover:text-sky-600 cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-8 h-8 md:w-10 md:h-10">
@@ -120,7 +150,7 @@ export default function Home() {
                 </Tr>
               </Thead>
               <Tbody>
-                {transactionData?.map((item: any) => (
+                {transactionData?.map?.((item: any) => (
                   <TransactionTableComponent receiving={item.metadata?.receiving} key={item.id} tfId={item.id} type={item.type} receiver={item.metadata?.targetId} amount={item?.metadata?.amount} date={new Date(item.createdAt).toLocaleString()} status={item.status} />
                 ))}
               </Tbody>
@@ -138,7 +168,7 @@ export default function Home() {
                 </Tr>
               </Thead>
               <Tbody>
-                {virtualAccountData?.map((item: any) => (
+                {virtualAccountData?.map?.((item: any) => (
                   <VAListTable
                     key={item.id}
                     VAId={item.id}

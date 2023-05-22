@@ -19,3 +19,10 @@ export const copyAccount = (text: string, toast: any) => {
     isClosable: true,
   })
 }
+
+export const hideText = (text: string, hidden: boolean) => {
+  if(!hidden){
+    return text
+  } 
+  return text.replaceAll(/./g,"*")
+}
