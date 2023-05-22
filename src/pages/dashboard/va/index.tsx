@@ -35,7 +35,7 @@ export default function Home() {
           </Button>
             <h1 className='text-3xl font-bold text-sky-600'>Manage your Virtual Account</h1>
         </div>
-        <Button colorScheme='blue' variant='solid' className='gap-x-2 items-center'>
+        <Button colorScheme='blue' variant='solid' className='gap-x-2 items-center' onClick={() => {router.push("/dashboard/va/create")}}>
           <p>Create New VA</p>
         </Button>
       </div>
