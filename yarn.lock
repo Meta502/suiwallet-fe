@@ -2922,6 +2922,11 @@ normalize-range@^0.1.2:
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
   integrity sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==
 
+nusantara-valid@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/nusantara-valid/-/nusantara-valid-0.4.0.tgz#1991daaa2f43011ff34eda8982da87ae1e669a5b"
+  integrity sha512-HxfvHy9KbpA0p4h7TfVX1YC8D2cXXCbR8ecG/NykukN8BBJIDy/Lq8nMDSP/TuGhgjgss69GXCjcjZSu7ykU7Q==
+
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
