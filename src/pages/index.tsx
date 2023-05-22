@@ -2,11 +2,18 @@ import { Inter } from 'next/font/google'
 import { Button } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/auth'
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const { authState: { token }, logout } = useAuth()
+  const router = useRouter()
+
+  const handleClick = (e:any) => {
+    e.preventDefault();
+    router.push("/dashboard");
+  };
 
   return (
     <main
@@ -38,8 +45,8 @@ export default function Home() {
             </Link>
           </>
         ) : (
-          <Button variant="outline" colorScheme="red" onClick={logout}>
-            Logout
+          <Button variant="solid" colorScheme="blue" onClick={handleClick}>
+            View Dashboard
           </Button>
         )}
       </div>
