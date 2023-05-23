@@ -58,6 +58,7 @@ export default function Home() {
             dateCreated={"18 May 2023 08:45 WIB"}
             paid={item.status === "PAID"}
             refetch={() => mutate(`${process.env.NEXT_PUBLIC_BASE_API_URL}/transaction/virtual-account/`)}
+            VANumber={item.paymentCode}
           />
         ))}
       </div>
