@@ -51,7 +51,15 @@ export default function Home() {
           Authorization: `Token ${token}`
         }
       })
-      console.log(res);
+
+      if (!res.data) {
+        return toast({
+          title: "VA Not Found",
+          description: "Please check your VA payment code",
+          status: "error"
+        })
+      }
+
       setConfirmationData(res.data);
     } catch (e: any) {
       setError(e.response.data.message);
