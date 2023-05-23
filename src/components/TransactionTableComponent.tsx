@@ -3,7 +3,9 @@ import {
   Tr,
   Td,
   Badge,
+  useToast,
 } from '@chakra-ui/react'
+import { copyID } from "@/utils"
 
 export interface TransactionTableComponent {
   key: string
@@ -18,6 +20,7 @@ export interface TransactionTableComponent {
 
 export const TransactionTableComponent: React.FC<TransactionTableComponent> = ({ tfId, type, receiver, receiving, amount, date, status }) => {
   const colorScheme = receiving ? "green" : status === "PENDING" ? 'yellow' : status === "EXPIRED" ? 'red' : 'green'
+  const toast = useToast()
   console.log(receiving)
 
   return <Tr key={tfId}>
@@ -49,7 +52,14 @@ export const TransactionTableComponent: React.FC<TransactionTableComponent> = ({
           <p className='text-sm'>to {type === "TOPUP" || type === "VIRTUAL_ACCOUNT_WITHDRAWAL" || receiving ? "your account" : receiver}</p>
         </div>
         <h3 className='text-2xl font-bold'>{new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(amount)}</h3>
-        {type === "TOPUP" && status !== "FINISHED" && <p className="text-sm">Payment Code: {tfId}</p>}
+        {type === "TOPUP" && status !== "FINISHED" && (
+          <div className='flex flex-row gap-x-2 items-center stroke-gray-500 hover:stroke-sky-500 cursor-pointer' onClick={() => copyID(tfId, toast)}>
+            <p className='text-sm'>Payment Code: {tfId}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-4 h-4 stroke-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+            </svg>
+          </div>
+        )}
         <p className='text-sm'>{date}</p>
       </div>
     </Td>
