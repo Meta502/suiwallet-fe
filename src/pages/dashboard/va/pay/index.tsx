@@ -60,6 +60,14 @@ export default function Home() {
         })
       }
 
+      if (res.data.status === "PAID" || res.data.status === "WITHDRAWED") {
+        return toast({
+          title: "VA has already been paid/withdrawed",
+          description: "Please enter another VA payment code",
+          status: "error",
+        })
+      }
+
       setConfirmationData(res.data);
     } catch (e: any) {
       setError(e.response.data.message);
